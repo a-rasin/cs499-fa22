@@ -1,70 +1,80 @@
 # Part 1
 
+## Report
+90%    4.56ms
+99%    4.89ms
+Requests/sec:  21388.43
+
+90%    4.82ms
+99%    5.15ms
+Requests/sec:  32924.07
+
+90%    3.34ms
+99%    4.56ms
+Requests/sec:  46348.97
+
+90%    2.81ms
+99%    5.05ms
+Requests/sec:  59684.51
+
 ## Collected data
 ### 1 webserver
-anazir01@node5:~/wrk$ wrk -t10 -c399 -d5s --timeout 2s --latency http://node0/
 Running 5s test @ http://node0/
-  10 threads and 399 connections
+  10 threads and 99 connections
   Thread Stats   Avg      Stdev     Max   +/- Stdev
-    Latency   124.89ms  280.14ms   1.86s    87.12%
-    Req/Sec     1.76k   602.73     5.21k    76.49%
+    Latency     4.18ms  326.71us   9.88ms   74.21%
+    Req/Sec     2.16k    72.26     2.66k    96.06%
   Latency Distribution
-     50%    7.79ms
-     75%    8.72ms
-     90%  567.51ms
-     99%    1.19s
-  88128 requests in 5.10s, 40.59MB read
-  Socket errors: connect 0, read 0, write 0, timeout 126
-  Non-2xx or 3xx responses: 1
-Requests/sec:  17282.05
-Transfer/sec:      7.96MB
+     50%    4.16ms
+     75%    4.39ms
+     90%    4.56ms
+     99%    4.89ms
+  109083 requests in 5.10s, 50.24MB read
+Requests/sec:  21388.43
+Transfer/sec:      9.85MB
 
-### 2 webservers
+### 2 webserver
 Running 5s test @ http://node0/
-  10 threads and 399 connections
+  10 threads and 99 connections
   Thread Stats   Avg      Stdev     Max   +/- Stdev
-    Latency   145.65ms  303.04ms   1.87s    85.83%
-    Req/Sec     1.78k   767.89    11.45k    83.83%
+    Latency     2.72ms    1.67ms   8.54ms   49.28%
+    Req/Sec     3.31k   118.09     3.67k    66.86%
   Latency Distribution
-     50%    7.85ms
-     75%    8.40ms
-     90%  653.25ms
-     99%    1.23s
-  88558 requests in 5.10s, 40.79MB read
-  Socket errors: connect 0, read 0, write 0, timeout 111
-  Non-2xx or 3xx responses: 4
-Requests/sec:  17364.88
-Transfer/sec:      8.00MB
+     50%    2.82ms
+     75%    4.39ms
+     90%    4.82ms
+     99%    5.15ms
+  167932 requests in 5.10s, 77.35MB read
+Requests/sec:  32924.07
+Transfer/sec:     15.16MB
 
-### 3 webservers
+### 3 webserver
 Running 5s test @ http://node0/
-  10 threads and 399 connections
+  10 threads and 99 connections
   Thread Stats   Avg      Stdev     Max   +/- Stdev
-    Latency   125.65ms  282.39ms   1.87s    87.10%
-    Req/Sec     1.81k   621.90     7.79k    76.29%
+    Latency     1.94ms    1.05ms   8.81ms   65.39%
+    Req/Sec     4.68k   267.38     6.14k    80.71%
   Latency Distribution
-     50%    7.66ms
-     75%    8.04ms
-     90%  570.77ms
-     99%    1.19s
-  90468 requests in 5.10s, 41.67MB read
-  Socket errors: connect 0, read 0, write 0, timeout 104
-  Non-2xx or 3xx responses: 6
-Requests/sec:  17739.91
-Transfer/sec:      8.17MB
+     50%    1.86ms
+     75%    2.65ms
+     90%    3.34ms
+     99%    4.56ms
+  236342 requests in 5.10s, 108.85MB read
+Requests/sec:  46348.97
+Transfer/sec:     21.35MB
 
-### 4 webservers
+### 4 webserver
 Running 5s test @ http://node0/
-  10 threads and 399 connections
+  10 threads and 99 connections
   Thread Stats   Avg      Stdev     Max   +/- Stdev
-    Latency   133.95ms  288.51ms   1.87s    86.43%
-    Req/Sec     1.76k   529.09     4.57k    73.16%
+    Latency     1.56ms    1.01ms   8.65ms   73.90%
+    Req/Sec     6.01k   312.09     6.83k    66.01%
   Latency Distribution
-     50%    7.80ms
-     75%    8.80ms
-     90%  606.91ms
-     99%    1.19s
-  88176 requests in 5.10s, 40.61MB read
-  Socket errors: connect 0, read 0, write 0, timeout 92
-Requests/sec:  17289.53
-Transfer/sec:      7.96MB
+     50%    1.36ms
+     75%    2.07ms
+     90%    2.81ms
+     99%    5.05ms
+  304417 requests in 5.10s, 140.21MB read
+Requests/sec:  59684.51
+Transfer/sec:     27.49MB
+
