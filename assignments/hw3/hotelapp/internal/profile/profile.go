@@ -40,5 +40,11 @@ func (s *Profile) Run() error {
 
 // GetProfiles returns hotel profiles for requested IDs
 func (s *Profile) GetProfiles(ctx context.Context, req *pb.Request) (*pb.Result, error) {
-	// TODO: Implement me
+	// DONE: Implement me
+	out := new(pb.Result)
+	err := grpc.Invoke(ctx, "/profile.Memdb/GetProfiles", req, out)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
