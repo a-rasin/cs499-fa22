@@ -55,7 +55,12 @@ func (s *Frontend) Run() error {
 }
 
 func (s *Frontend) initProfileClient() error {
-	// TODO: Implement me	
+	// DONE: Implement me
+	conn, err := dialer.Dial(s.profileAddr, s.tracer)
+	if( err != nil){
+		return fmt.Errorf("did not connect to profile service: %v", err)
+	}
+	s.profileClient = profile.NewProfileClient(conn) //TODO in profile/proto
 }
 
 func (s *Frontend) initSearchClient() error {

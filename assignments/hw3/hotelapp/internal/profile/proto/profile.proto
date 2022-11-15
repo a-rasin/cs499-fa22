@@ -3,3 +3,15 @@ syntax = "proto3";
 package profile;
 
 // TODO: Implement me
+
+service GetProfiles {
+    rpc Profiles(ProfileReq) returns (ProfileRes);
+}
+
+message ProfileReq {
+    []string hotelIds = 1;
+}
+
+message ProfileRes {
+    repeated []*profile.Hotel hotels = 1; 
+}
