@@ -53,7 +53,7 @@ func (s *Profile) Run() error {
 	}
 
 	srv := grpc.NewServer(opts...)
-	pb.RegisterSearchServer(srv, s)
+	// pb.RegisterSearchServer(srv, s)
 
 	// Register reflection service on gRPC server.
 	reflection.Register(srv)
@@ -64,7 +64,7 @@ func (s *Profile) Run() error {
 		log.Fatalf("failed to listen: %v", err)
 	}
 
-	log.Printf("Start Search server. Addr: %s:%d\n", s.addr, s.port)
+	log.Printf("Start Profile server. Addr: %s:%d\n", s.addr, s.port)
 	return srv.Serve(lis)
 }
 
