@@ -35,7 +35,37 @@ func NewProfile(a string, p int, db *DatabaseSession, tr opentracing.Tracer) *Pr
 
 // Run starts the server
 func (s *Profile) Run() error {
-	// TODO: Implement me
+	// DONE: Implement me
+	if s.port == 0 {
+		return fmt.Errorf("server port must be set")
+	}
+
+	opts := []grpc.ServerOption{
+		grpc.KeepaliveParams(keepalive.ServerParameters{
+			Timeout: 120 * time.Second,
+		}),
+		grpc.KeepaliveEnforcementPolicy(keepalive.EnforcementPolicy{
+			PermitWithoutStream: true,
+		}),
+		grpc.UnaryInterceptor(
+			otgrpc.OpenTracingServerInterceptor(s.tracer),
+		),
+	}
+
+	srv := grpc.NewServer(opts...)
+	pb.RegisterSearchServer(srv, s)
+
+	// Register reflection service on gRPC server.
+	reflection.Register(srv)
+
+	// listener
+	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", s.port))
+	if err != nil {
+		log.Fatalf("failed to listen: %v", err)
+	}
+
+	log.Printf("Start Search server. Addr: %s:%d\n", s.addr, s.port)
+	return srv.Serve(lis)
 }
 
 // GetProfiles returns hotel profiles for requested IDs
