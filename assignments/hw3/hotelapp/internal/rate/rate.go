@@ -45,9 +45,33 @@ func inTimeSpan(start, end, check time.Time) bool {
 
 // GetRates gets rates for hotels for specific date range.
 func (s *Rate) GetRates(ctx context.Context, req *pb.Request) (*pb.Result, error) {
-	// TODO: Implement me
+	// DONE: Implement me
 	// HINT: Reuse the implementation from the monolithic implementation 
 	// HINT: and modify as needed.
+	res := new(pb.Result)
+
+	ratePlans, err := s.dbsession.GetRates(req.HotelIds)
+	if err != nil {
+		return nil, err
+	}
+	finalRatePlans := make(RatePlans, 0)
+
+	start, _ := time.Parse("2006-01-02", req.InDate)
+	end, _ := time.Parse("2006-01-02", req.OutDate)
+
+	sort.Sort(ratePlans)
+	for _, rateplan := range ratePlans {
+		in, _ := time.Parse("2006-01-02", rateplan.InDate)
+		out, _ := time.Parse("2006-01-02", rateplan.OutDate)
+		if inTimeSpan(in, out, start) && inTimeSpan(in, out, end) {
+			finalRatePlans = append(finalRatePlans, rateplan)
+		}
+	}
+
+	res.RatePlans = finalRatePlans
+
+	return res, nil
+
 }
 
 type RatePlans []*pb.RatePlan
