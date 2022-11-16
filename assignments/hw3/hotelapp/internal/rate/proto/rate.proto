@@ -9,11 +9,27 @@ service Rate {
 }
 
 message Request {
-  []string HotelIds = 1;
+  repeated string HotelIds = 1;
   string InDate = 2;
   string OutDate = 3;
 }
 
+message RoomType {
+  float bookableRate = 1;
+  string code = 2;
+  string description = 3;
+  float totalRate = 4;
+  float totalRateInclusive = 5;
+}
+
+message RatePlan {
+  int32 hotelId = 1;
+  string code = 2;
+  string inDate = 3;
+  string outDate = 4;
+  RoomType roomType = 5;
+}
+
 message Result {
-  repeated []RatePlan RatePlans = 1;
+  repeated RatePlan RatePlans = 1;
 }

@@ -9,9 +9,15 @@ service GetProfiles {
 }
 
 message ProfileReq {
-    []string hotelIds = 1;
+    repeated string hotelIds = 1;
+}
+
+message Hotel {
+   int32 hotelIds = 1;
+   float lat = 2;
+   float lon = 3;
 }
 
 message ProfileRes {
-    repeated []*profile.Hotel hotels = 1; 
+    repeated Hotel hotels = 1; 
 }
