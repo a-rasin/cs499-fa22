@@ -88,7 +88,7 @@ func (s *Search) initGeoClient() error {
 	if err != nil{
 		return fmt.Errorf("did not connect to geo service: %v", err)
 	}
-	s.GeoClient = geo.NewGeoClient(conn) //TODO in geo/proto?
+	s.geoClient = geo.NewGeoClient(conn) //TODO in geo/proto?
 	return nil
 }
 
@@ -98,7 +98,7 @@ func (s *Search) initRateClient() error {
 	if err != nil{
 		return fmt.Errorf("did not connect to rate service: %v", err)
 	}
-	s.RateClient = rate.NewRateClient(conn) //TODO in rate/proto?
+	s.rateClient = rate.NewRateClient(conn) //TODO in rate/proto?
 	return nil
 }
 
@@ -106,7 +106,7 @@ func (s *Search) initRateClient() error {
 func (s *Search) Nearby(ctx context.Context, req *pb.NearbyRequest) (*pb.SearchResult, error) {
 	// DONE: Implement me
 		// find nearby hotels
-		nearby, err := s.geo.Nearby(&geo.Request{
+		nearby, err := s.geoClient.Nearby(ctx, &geo.Request{
 			Lat: req.Lat,
 			Lon: req.Lon,
 		})
@@ -115,7 +115,7 @@ func (s *Search) Nearby(ctx context.Context, req *pb.NearbyRequest) (*pb.SearchR
 		}
 	
 		// find rates for hotels
-		rates, err := s.rate.GetRates(&rate.RateRequest{
+		rates, err := s.rateClient.GetRates(ctx, &rate.Request{
 			HotelIds: nearby.HotelIds,
 			InDate:   req.InDate,
 			OutDate:  req.OutDate,
@@ -125,7 +125,8 @@ func (s *Search) Nearby(ctx context.Context, req *pb.NearbyRequest) (*pb.SearchR
 		}
 	
 		// build the response
-		res := new(SearchResult)
+		res := new(pb.SearchResult)
+		
 		for _, ratePlan := range rates.RatePlans {
 			res.HotelIds = append(res.HotelIds, ratePlan.HotelId)
 		}
