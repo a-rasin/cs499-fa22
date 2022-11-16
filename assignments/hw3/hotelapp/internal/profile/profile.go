@@ -72,9 +72,8 @@ func (s *Profile) Run() error {
 func (s *Profile) GetProfiles(ctx context.Context, req *pb.Request) (*pb.Result, error) {
 	// DONE: Implement me
 	out := new(pb.Result)
-	err := grpc.Invoke(ctx, "/profile.Memdb/GetProfiles", req, out)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
+	var err error
+
+	out.Hotels, err = s.dbsession.GetProfiles(req.HotelIds)
+	return out, err
 }

@@ -23,7 +23,7 @@ message RoomType {
 }
 
 message RatePlan {
-  int32 hotelId = 1;
+  string hotelId = 1;
   string code = 2;
   string inDate = 3;
   string outDate = 4;
