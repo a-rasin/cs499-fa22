@@ -5,10 +5,10 @@ package profile;
 // TODO: Implement me
 
 service GetProfiles {
-    rpc Profiles(ProfileReq) returns (ProfileRes);
+    rpc Profiles(Request) returns (Result);
 }
 
-message ProfileReq {
+message Request {
     repeated string hotelIds = 1;
 }
 
@@ -24,13 +24,13 @@ message Address {
 }
 
 message Hotel {
-    int32 id = 1;
+    string id = 1;
     string name = 2;
     string phoneNumber = 3;
     string description = 4;
     Address address = 5;
 }
 
-message ProfileRes {
+message Result {
     repeated Hotel hotels = 1; 
 }

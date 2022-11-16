@@ -5,14 +5,14 @@ package geo;
 // DONE: Implement me
 
 service Geo {
-  rpc Nearby(NearbyRequest) returns (NearbyResult);
+  rpc Nearby(Request) returns (Result);
 }
 
-message NearbyRequest {
+message Request {
   float lat = 1;
   float lon = 2;
 }
 
-message NearbyResult {
+message Result {
   repeated string hotelIds = 1;
 }

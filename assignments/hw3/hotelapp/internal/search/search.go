@@ -42,46 +42,44 @@ func NewSearch(a string, p int, geoaddr string, rateaddr string, t opentracing.T
 
 // Run starts the server
 func (s *Search) Run() error {
-	func (s *Search) Run() error {
-		if s.port == 0 {
-			return fmt.Errorf("server port must be set")
-		}
-	
-		opts := []grpc.ServerOption{
-			grpc.KeepaliveParams(keepalive.ServerParameters{
-				Timeout: 120 * time.Second,
-			}),
-			grpc.KeepaliveEnforcementPolicy(keepalive.EnforcementPolicy{
-				PermitWithoutStream: true,
-			}),
-			grpc.UnaryInterceptor(
-				otgrpc.OpenTracingServerInterceptor(s.tracer),
-			),
-		}
-	
-		srv := grpc.NewServer(opts...)
-		pb.RegisterSearchServer(srv, s)
-	
-		// Register reflection service on gRPC server.
-		reflection.Register(srv)
-	
-		// init grpc clients
-		if err := s.initGeoClient(); err != nil {
-			return err
-		}
-		if err := s.initRateClient(); err != nil {
-			return err
-		}
-	
-		// listener
-		lis, err := net.Listen("tcp", fmt.Sprintf(":%d", s.port))
-		if err != nil {
-			log.Fatalf("failed to listen: %v", err)
-		}
-	
-		log.Printf("Start Search server. Addr: %s:%d\n", s.addr, s.port)
-		return srv.Serve(lis)
+	if s.port == 0 {
+		return fmt.Errorf("server port must be set")
 	}
+
+	opts := []grpc.ServerOption{
+		grpc.KeepaliveParams(keepalive.ServerParameters{
+			Timeout: 120 * time.Second,
+		}),
+		grpc.KeepaliveEnforcementPolicy(keepalive.EnforcementPolicy{
+			PermitWithoutStream: true,
+		}),
+		grpc.UnaryInterceptor(
+			otgrpc.OpenTracingServerInterceptor(s.tracer),
+		),
+	}
+
+	srv := grpc.NewServer(opts...)
+	pb.RegisterSearchServer(srv, s)
+
+	// Register reflection service on gRPC server.
+	reflection.Register(srv)
+
+	// init grpc clients
+	if err := s.initGeoClient(); err != nil {
+		return err
+	}
+	if err := s.initRateClient(); err != nil {
+		return err
+	}
+
+	// listener
+	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", s.port))
+	if err != nil {
+		log.Fatalf("failed to listen: %v", err)
+	}
+
+	log.Printf("Start Search server. Addr: %s:%d\n", s.addr, s.port)
+	return srv.Serve(lis)
 }
 
 func (s *Search) initGeoClient() error {

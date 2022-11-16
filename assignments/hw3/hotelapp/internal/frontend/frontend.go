@@ -61,6 +61,7 @@ func (s *Frontend) initProfileClient() error {
 		return fmt.Errorf("did not connect to profile service: %v", err)
 	}
 	s.profileClient = profile.NewProfileClient(conn) //TODO in profile/proto
+	return nil
 }
 
 func (s *Frontend) initSearchClient() error {
