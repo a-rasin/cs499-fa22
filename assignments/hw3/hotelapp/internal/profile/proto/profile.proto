@@ -12,10 +12,23 @@ message ProfileReq {
     repeated string hotelIds = 1;
 }
 
+message Address {
+    int32 streetNumber = 1;
+    string streetName = 2;
+    string city = 3;
+    string state = 4;
+    string country = 5;
+    int32 postalCode = 6;
+    float lat = 7;
+    float lon = 8;
+}
+
 message Hotel {
-   int32 hotelIds = 1;
-   float lat = 2;
-   float lon = 3;
+    int32 id = 1;
+    string name = 2;
+    string phoneNumber = 3;
+    string description = 4;
+    Address address = 5;
 }
 
 message ProfileRes {
