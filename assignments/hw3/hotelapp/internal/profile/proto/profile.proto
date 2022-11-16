@@ -4,8 +4,8 @@ package profile;
 
 // TODO: Implement me
 
-service GetProfiles {
-    rpc Profiles(Request) returns (Result);
+service Profile {
+    rpc GetProfiles(Request) returns (Result);
 }
 
 message Request {
