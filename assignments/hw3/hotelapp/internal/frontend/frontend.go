@@ -116,7 +116,16 @@ func (s *Frontend) searchHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// hotel profiles
-	// TODO: Implement me	
+	// TODO: Implement me
+	profileResp, err := s.ProfileClient.GetProfiles(ctx, &profile.Request{
+		hotelIds: searchResp.HotelIds,
+		Locale: locale,
+	})
+	if err != nil{
+		log.Error("Searchhandler GetProfiles failed")
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 
 	json.NewEncoder(w).Encode(geoJSONResponse(profileResp.Hotels))
 }
