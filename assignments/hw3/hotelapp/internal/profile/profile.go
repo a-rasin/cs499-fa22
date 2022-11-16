@@ -53,7 +53,7 @@ func (s *Profile) Run() error {
 	}
 
 	srv := grpc.NewServer(opts...)
-	// pb.RegisterSearchServer(srv, s)
+	pb.RegisterProfileServer(srv, s)
 
 	// Register reflection service on gRPC server.
 	reflection.Register(srv)

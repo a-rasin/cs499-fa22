@@ -54,7 +54,7 @@ func (s *Rate) Run() error {
 	}
 
 	srv := grpc.NewServer(opts...)
-	// pb.RegisterSearchServer(srv, s)
+	pb.RegisterRateServer(srv, s)
 
 	// Register reflection service on gRPC server.
 	reflection.Register(srv)
