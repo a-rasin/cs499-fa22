@@ -8,6 +8,7 @@ import (
 	"github.com/ucy-coast/hotel-app/pkg/util"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
+	pb "github.com/ucy-coast/hotel-app/internal/rate/proto"
 )
 
 type DatabaseSession struct {
@@ -38,15 +39,16 @@ func (db *DatabaseSession) GetRates(hotelIds []string) (RatePlans, error) {
 	defer session.Close()
 	c := session.DB("rate-db").C("inventory")
 
-	rates := make([]*RatePlans, 0)
+	rates := make(RatePlans, 0)
 
-	for _, := range hotelIds {
-		temprate := new(RatePlans)
-		err := c.Find(bson.M{"id" : id}).One(&temorate)
+	for _, id := range hotelIds {
+		temprate := new(pb.RatePlan)
+		err := c.Find(bson.M{"hotelIds" : id}).One(&temprate)
 		if err != nil{
-			log.Ftalf("Failed to get rate data: ", err)
+			log.Fatal("Failed to get rate data: ", err)
 		}
 		rates = append(rates, temprate)
 	}
-	return rates, ni
+	log.Info(rates)
+	return rates, nil
 }
