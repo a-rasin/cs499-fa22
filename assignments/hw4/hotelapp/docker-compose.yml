@@ -1,7 +1,7 @@
 version: "3"
 services:
   frontend:
-    image: ${REGISTRY-127.0.0.1:5000}/hotel_app_frontend_single_node_memdb
+    image: anazir01/hotel_app_frontend_single_node_memdb
     entrypoint: frontend
     container_name: 'hotel_app_frontend'
     ports:
@@ -9,7 +9,7 @@ services:
     restart: always
 
   profile:
-    image: ${REGISTRY-127.0.0.1:5000}/hotel_app_profile_single_node_memdb
+    image: anazir01/hotel_app_profile_single_node_memdb
     container_name: 'hotel_app_profile'
     entrypoint: profile
     ports:
@@ -17,7 +17,7 @@ services:
     restart: always
  
   search:
-    image: ${REGISTRY-127.0.0.1:5000}/hotel_app_search_single_node_memdb
+    image: anazir01/hotel_app_search_single_node_memdb
     entrypoint: search
     container_name: 'hotel_app_search'
     ports:
@@ -25,7 +25,7 @@ services:
     restart: always
 
   geo:
-    image: ${REGISTRY-127.0.0.1:5000}/hotel_app_geo_single_node_memdb
+    image: anazir01/hotel_app_geo_single_node_memdb
     container_name: 'hotel_app_geo'
     entrypoint: geo
     ports:
@@ -33,7 +33,19 @@ services:
     restart: always
 
   rate:
-    # TODO: Implement me
+    # DONE: Implement me
+    build:
+      context: .
+      args:
+        - DB=mongodb
+    image: hotel_app_rate_single_node_memdb
+    container_name: 'hotel_app_rate'
+    entrypoint: rate
+    ports:
+      - "8084:8084"
+    depends_on:
+            - mongodb-rate
+    restart: always
 
   jaeger:
     image: jaegertracing/all-in-one:latest
@@ -50,7 +62,13 @@ services:
     restart: always
 
   mongodb-rate:
-    # TODO: Implement me
-
+    # DONE: Implement me
+    image: mongo:4.4.6
+    container_name: "hotel_app_mongodb"
+    ports:
+            - "27018:27017"
+    restart: always
+    volumes:
+        - rate:/data/db
 volumes:
-    # TODO: Implement me
+    rate:
